@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { AuthenticateUserController } from './Controllers/AuthenticateUserController';
-
+import { CreateMessageController } from './Controllers/CreateMessageController';
+import { ensureAuthenticated } from './middlewares/ensureAuthenticated';
 const routes = Router();
 
 routes.get('/github', (req, res) => {
@@ -13,5 +14,5 @@ routes.get('/signin/callback', (req, res) => {
 })
 
 routes.post('/authenticate', new AuthenticateUserController().handle);
-
+routes.post('/message', ensureAuthenticated, new CreateMessageController().handle);
 export { routes };
